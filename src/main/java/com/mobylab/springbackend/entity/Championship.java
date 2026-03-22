@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -17,12 +19,20 @@ import lombok.experimental.Accessors;
 public class Championship extends BaseEntity {
     private String name;
     private String description;
-    private String racing_class;
+
+    @Column(name = "racing_class")
+    private String racingClass;
 
     @Enumerated(EnumType.STRING)
     private ChampionshipStatus status;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
     private User createdBy;
+
+    @OneToMany(mappedBy = "championship")
+    private List<ChampionshipEntry> championshipEntries;
+
+    @OneToMany(mappedBy = "championship")
+    private List<Race> championshipRaces;
 }

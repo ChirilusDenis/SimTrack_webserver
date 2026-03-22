@@ -15,5 +15,4 @@ import java.util.UUID;
 public class RaceDto {
     private String name;
     private String trackName;
-    private UUID championshipId;
 }

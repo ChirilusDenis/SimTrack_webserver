@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface RaceRepository extends JpaRepository<Race, UUID> {
     List<Race> findByName(String name);
-    List<Race> findByTrackname(String trackname);
+    List<Race> findByTrackName(String trackName);
 
     List<Race> findByChampionshipId(UUID championshipId);
     List<Race> findByChampionship(Championship championship);

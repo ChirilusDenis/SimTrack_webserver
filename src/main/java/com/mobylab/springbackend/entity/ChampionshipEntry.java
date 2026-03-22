@@ -1,10 +1,7 @@
 package com.mobylab.springbackend.entity;
 
 import com.mobylab.springbackend.enums.ApplicationStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +17,11 @@ import lombok.experimental.Accessors;
 @Table(name = "championship_entries",schema = "project")
 public class ChampionshipEntry extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "championship_id")
     private Championship championship;
 

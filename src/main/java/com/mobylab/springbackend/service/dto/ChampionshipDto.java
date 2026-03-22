@@ -14,5 +14,5 @@ import java.util.UUID;
 public class ChampionshipDto {
     private String name;
     private String description;
-    private UUID createdById;
+    private String racingClass;
 }

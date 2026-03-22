@@ -1,8 +1,7 @@
-package com.mobylab.springbackend.service.dto;
+package com.mobylab.springbackend.service.responseDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component

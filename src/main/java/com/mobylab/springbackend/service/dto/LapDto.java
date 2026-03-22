@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 @Component
 public class LapDto {
-    private Long time;
+    private LocalTime time;
     private int points;
     private UUID raceID;
     private UUID driverId;

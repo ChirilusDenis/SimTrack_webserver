@@ -1,4 +1,4 @@
-package com.mobylab.springbackend.service.dto;
+package com.mobylab.springbackend.service.responseDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserDto {
+public class UserResponseDto {
     private UUID id;
     private String username;
     private String email;

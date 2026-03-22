@@ -12,8 +12,6 @@ import java.util.UUID;
 @Setter
 @Accessors(chain = true)
 public class RaceSubmissionDto {
-    private long time;
+    private String time;
     private String videoURL;
-    private UUID driverId;
-    private UUID raceId;
 }

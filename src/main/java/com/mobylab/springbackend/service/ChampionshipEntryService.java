@@ -10,10 +10,7 @@ import com.mobylab.springbackend.repository.ChampionshipEntryRepository;
 import com.mobylab.springbackend.repository.ChampionshipRepository;
 import com.mobylab.springbackend.repository.UserRepository;
 import com.mobylab.springbackend.service.dto.ChampionshipEntryDto;
-import com.mobylab.springbackend.service.dto.UserDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +55,7 @@ public class ChampionshipEntryService {
         return championshipEntryRepository.save(championshipEntry);
     }
 
-    public void aproveEntry(UUID entryId) {
+    public void approveEntry(UUID entryId) {
         ChampionshipEntry championshipEntry = championshipEntryRepository.findById(entryId)
                 .orElseThrow(() -> new BadRequestException("Entry not found"));
 
@@ -78,29 +75,10 @@ public class ChampionshipEntryService {
             throw new BadRequestException("This entry is not pending");
         }
 
-        championshipEntry.setApplicationStatus(ApplicationStatus.REJECTED);
-        championshipEntryRepository.save(championshipEntry);
-    }
+//        championshipEntry.setApplicationStatus(ApplicationStatus.REJECTED);
+//        championshipEntryRepository.save(championshipEntry);
 
-    public List<UserDto> getParticipants(UUID championshipId) {
-        Optional<Championship> maybeChamp = championshipRepository.findById(championshipId);
-        if(maybeChamp.isEmpty() || maybeChamp.get().getStatus() == ChampionshipStatus.FINISHED) {
-            throw new BadRequestException("Championship not found");
-        }
-
-        List<UserDto> users = championshipEntryRepository
-                .findByChampionshipIdAndApplicationStatus(championshipId, ApplicationStatus.APPROVED)
-                .stream()
-                .map(entry -> {
-                    User user = entry.getUser();
-                    return new UserDto()
-                            .setUsername(user.getUsername())
-                            .setEmail(user.getEmail())
-                            .setId(user.getId());
-                })
-                .distinct()
-                .toList();
-        return users;
+        championshipEntryRepository.delete(championshipEntry);
     }
 
     public List<ChampionshipEntry> getPendingEntries() {

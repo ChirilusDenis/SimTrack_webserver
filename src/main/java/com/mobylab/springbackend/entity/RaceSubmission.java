@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalTime;
+
 @Entity
 @Getter
 @Setter
@@ -16,17 +18,19 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Table(name = "race_submissions", schema = "project")
 public class RaceSubmission extends BaseEntity {
-    private long time;
+    private LocalTime time;
+
+    @Column(name = "video_url")
     private String videoURL;
 
     @Enumerated(EnumType.STRING)
     private SubmissionStatus status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User driver;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
 }

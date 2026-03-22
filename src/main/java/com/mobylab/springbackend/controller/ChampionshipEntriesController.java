@@ -2,6 +2,7 @@ package com.mobylab.springbackend.controller;
 
 import com.mobylab.springbackend.entity.ChampionshipEntry;
 import com.mobylab.springbackend.service.ChampionshipEntryService;
+import com.mobylab.springbackend.service.responseDto.ChampionshipEntryResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,20 +20,24 @@ public class ChampionshipEntriesController implements SecuredRestController{
 
     @GetMapping("/pending")
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public ResponseEntity<List<ChampionshipEntry>> getPendingEntries() {
-        List<ChampionshipEntry> pendingEntries = championshipEntryService.getPendingEntries();
+    public ResponseEntity<List<ChampionshipEntryResponseDto>> getPendingEntries() {
+        List<ChampionshipEntryResponseDto> pendingEntries = championshipEntryService
+                .getPendingEntries()
+                .stream()
+                .map(ChampionshipEntryResponseDto::new)
+                .toList();
         return ResponseEntity.status(200).body(pendingEntries);
     }
 
     @PostMapping("/{id}/accept")
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public ResponseEntity<Void> acceptEntry(@PathVariable UUID id) {
-        championshipEntryService.aproveEntry(id);
+    public ResponseEntity<Void> acceptEntry(@PathVariable("id") UUID id) {
+        championshipEntryService.approveEntry(id);
         return ResponseEntity.status(200).build();
     }
     @PostMapping("/{id}/reject")
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public ResponseEntity<Void> rejectEntry(@PathVariable UUID id) {
+    public ResponseEntity<Void> rejectEntry(@PathVariable("id") UUID id) {
         championshipEntryService.rejectEntry(id);
         return ResponseEntity.status(200).build();
     }

@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-// TODO
 public class SecurityConfiguration {
 
     @Value("${vars.security.enable}")
@@ -36,7 +35,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable);
         if (securityEnabled) {
            http.authorizeHttpRequests(auth -> auth
-                   .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register",
+                   .requestMatchers("/auth/login", "/auth/register",
                            "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                    .anyRequest().authenticated())
                    .exceptionHandling((exception)-> exception.authenticationEntryPoint(authEntryPoint))

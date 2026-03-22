@@ -15,10 +15,8 @@ In order to run the application you need to have maven installed (https://maven.
 ```shell showLineNumbers
 mvn clean install
 mvn spring-boot:run
-firefox http://localhost:8090/swagger-ui/index.html
+http://localhost:8090/swagger-ui/index.html
 ```
-# TODO
- CHECK CONFIG PACKAGE
 
 # End points
 
@@ -28,29 +26,29 @@ POST /auth/login
 
 ## Championships
 
-~~POST /championships          (organizer)~~
+POST /championships          (organizer)
 
-~~GET /championships~~
+GET /championships
 
-~~POST /championships/{id}/apply~~
+POST /championships/{id}/apply
 
-~~GET /championships/{id}/participants~~
+GET /championships/{id}/participants
 
-~~POST /championships/{id}/close~~
+POST /championships/{id}/close          (organizer)
 
 ## ChampionshipEntries
 
-~~GET /championshipentries/pending~~
+GET /championshipentries/pending
 
-~~POST /championshipentries/{id}/accept~~
+POST /championshipentries/{id}/accept          (organizer)
 
-~~POST /championshipentries/{id}/reject~~
+POST /championshipentries/{id}/reject          (organizer)
 
 ## Races
 
-~~POST /championships/{id}/race~~
+POST /championships/{id}/race          (organizer)
 
-~~GET /championships/{id}/races~~
+GET /championships/{id}/races
 
 ## Submissions
 
@@ -58,6 +56,6 @@ POST /submissions/race/{id}/submit
 
 GET /submissions
 
-POST /submissions/{id}/validate
+POST /submissions/{id}/validate          (organizer)
 
-POST /submissions/{id}/reject
+POST /submissions/{id}/reject          (organizer)

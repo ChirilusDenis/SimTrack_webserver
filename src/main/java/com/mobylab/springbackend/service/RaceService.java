@@ -24,13 +24,13 @@ public class RaceService {
     private final RaceRepository raceRepository;
     private final ChampionshipRepository championshipRepository;
 
-    public Race createRace(RaceDto raceDto) {
-        Championship championship = championshipRepository.findById(raceDto.getChampionshipId())
+    public Race createRace(RaceDto raceDto, UUID championshipId) {
+        Championship championship = championshipRepository.findById(championshipId)
                 .orElseThrow(() -> new BadRequestException("Championship not found"));
 
         Race race = new Race()
                 .setName(raceDto.getName())
-                .setTrackname(raceDto.getTrackName())
+                .setTrackName(raceDto.getTrackName())
                 .setChampionship(championship);
         return raceRepository.save(race);
     }
@@ -39,6 +39,7 @@ public class RaceService {
         Championship championship = championshipRepository.findById(championshipId)
                 .orElseThrow(() -> new BadRequestException("Championship not found"));
 
-        return raceRepository.findByChampionshipId(championshipId);
+//        return raceRepository.findByChampionshipId(championshipId);
+        return championship.getChampionshipRaces();
     }
 }
