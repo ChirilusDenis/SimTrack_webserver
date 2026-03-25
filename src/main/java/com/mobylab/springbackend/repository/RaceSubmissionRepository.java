@@ -8,6 +8,7 @@ import com.mobylab.springbackend.enums.SubmissionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface RaceSubmissionRepository extends JpaRepository<RaceSubmission, UUID> {
@@ -19,4 +20,7 @@ public interface RaceSubmissionRepository extends JpaRepository<RaceSubmission, 
     List<RaceSubmission> findByDriver(User driver);
     List<RaceSubmission> findByDriverId(UUID driverId);
 
+    Optional<RaceSubmission> findByRaceIdAndDriverId(UUID raceId, UUID driverId);
+
+    Boolean existsByRaceIdAndStatus(UUID raceId, SubmissionStatus status);
 }

@@ -36,10 +36,11 @@ public class RaceService {
     }
 
     public List<Race> getChampionshipRaces(UUID championshipId) {
-        Championship championship = championshipRepository.findById(championshipId)
-                .orElseThrow(() -> new BadRequestException("Championship not found"));
+        if(!championshipRepository.existsById(championshipId)) {
+            throw new BadRequestException("Championship not found");
+        }
 
 //        return raceRepository.findByChampionshipId(championshipId);
-        return championship.getChampionshipRaces();
+        return raceRepository.findByChampionshipId(championshipId);
     }
 }

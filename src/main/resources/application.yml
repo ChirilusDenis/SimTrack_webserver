@@ -11,7 +11,9 @@ spring:
         default_schema: project
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
-        ddl-auto: create-drop
+        ddl-auto: update # create-drop
+#        jdbc:
+#          time_zone: UTC # Europe/Bucharest
     open-in-view: false
   flyway:
     enabled: true
@@ -24,8 +26,9 @@ spring:
       matching-strategy: ant_path_matcher
 
 vars:
+#  TODO
   security:
-    enable: true
+    enable: false
 
 server:
   port: 8090

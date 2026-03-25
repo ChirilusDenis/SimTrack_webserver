@@ -25,5 +25,6 @@ public class ChampionshipEntry extends BaseEntity {
     @JoinColumn(name = "championship_id")
     private Championship championship;
 
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 }

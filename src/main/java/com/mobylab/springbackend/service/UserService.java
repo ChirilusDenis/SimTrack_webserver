@@ -25,20 +25,4 @@ public class UserService {
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
-    public int getPointsInChampionship(UUID championshipId, UUID driverId) {
-        int points = 0;
-        User driver  = userRepository.findById(driverId)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-
-        if (!championshipRepository.existsById(championshipId)) {
-            throw new BadRequestException("Championship not found");
-        }
-
-        for(Lap lap : driver.getDrivenLaps()) {
-            if(lap.getRace().getChampionship().getId().equals(championshipId)) {
-                points += lap.getPoints();
-            }
-        }
-        return points;
-    }
 }

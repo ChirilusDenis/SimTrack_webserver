@@ -5,12 +5,13 @@ import com.mobylab.springbackend.entity.Race;
 import com.mobylab.springbackend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.List;
 
 public interface LapRepository extends JpaRepository<Lap, UUID> {
     List<Lap> findByRaceAndDriver(Race race, User driver);
-    List<Lap> findByRaceIdAndDriverId(UUID raceId, UUID driverId);
+    Optional<Lap> findByRaceIdAndDriverId(UUID raceId, UUID driverId);
 
     List<Lap> findByRace(Race race);
     List<Lap> findByRaceId(UUID raceId);
@@ -20,5 +21,4 @@ public interface LapRepository extends JpaRepository<Lap, UUID> {
 
     List<Lap> findByVerifiedBy(User verifiedBy);
     List<Lap> findByVerifiedById(UUID verifiedById);
-
 }

@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.JdbcTypeCode;
 
+import java.sql.Types;
 import java.time.LocalTime;
 
 @Entity
@@ -17,6 +19,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Table(name = "laps", schema = "project")
 public class Lap extends BaseEntity {
+    @JdbcTypeCode(Types.TIME)
+    @Column(columnDefinition = "TIME(3)")
     private LocalTime time;
     private int points;
 

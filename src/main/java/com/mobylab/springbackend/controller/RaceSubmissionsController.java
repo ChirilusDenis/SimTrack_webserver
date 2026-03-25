@@ -2,6 +2,7 @@ package com.mobylab.springbackend.controller;
 
 import com.mobylab.springbackend.entity.Lap;
 import com.mobylab.springbackend.entity.RaceSubmission;
+import com.mobylab.springbackend.repository.RaceSubmissionRepository;
 import com.mobylab.springbackend.service.RaceSubmissionService;
 import com.mobylab.springbackend.service.UserService;
 import com.mobylab.springbackend.service.dto.RaceSubmissionDto;
@@ -18,15 +19,17 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/submissions")
-public class RaceSubmissionsController {
+public class RaceSubmissionsController implements SecuredRestController {
     @Autowired
     private RaceSubmissionService raceSubmissionService;
 
     @Autowired
     private UserService  userService;
+    @Autowired
+    private RaceSubmissionRepository raceSubmissionRepository;
 
     @PostMapping("/race/{id}/submit")
-    @PreAuthorize("hasAuthority('USER')")
+//    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<RaceSubmissionResponseDto> submit(@PathVariable("id") UUID raceId,
                                                             Principal principal,
                                                             @RequestBody RaceSubmissionDto raceSubmissionDto) {
@@ -38,7 +41,7 @@ public class RaceSubmissionsController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<List<RaceSubmissionResponseDto>> getAllSubmissions() {
         List<RaceSubmissionResponseDto> submissions = raceSubmissionService.getPending()
                 .stream()
@@ -48,7 +51,7 @@ public class RaceSubmissionsController {
     }
 
     @PostMapping("/{id}/validate")
-    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<LapResponseDto> validateRaceSubmission(@PathVariable("id") UUID submissionId,
                                                                  Principal principal) {
         String email = principal.getName();
@@ -58,9 +61,18 @@ public class RaceSubmissionsController {
     }
 
     @PostMapping("/{id}/reject")
-    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<Void> rejectRaceSubmission(@PathVariable("id") UUID submissionId) {
         raceSubmissionService.reject(submissionId);
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/mine")
+//    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<List<RaceSubmissionResponseDto>> getMySubmissions(Principal principal) {
+        String email = principal.getName();
+        List<RaceSubmissionResponseDto> subs = raceSubmissionService.getByUserId(
+                userService.findByEmail(email).getId());
+        return ResponseEntity.status(200).body(subs);
     }
 }

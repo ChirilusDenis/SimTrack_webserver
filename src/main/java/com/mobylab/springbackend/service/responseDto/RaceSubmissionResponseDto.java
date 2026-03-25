@@ -11,16 +11,16 @@ import java.util.UUID;
 @Getter
 public class RaceSubmissionResponseDto {
     private UUID id;
-    private LocalTime time;
+    private String time;
     private String videoURL;
     private String driver;
-    private String trackName;
+    private String name;
 
     public RaceSubmissionResponseDto(RaceSubmission raceSubmission) {
         this.id = raceSubmission.getId();
-        this.time = raceSubmission.getTime();
+        this.time = raceSubmission.getTime().toString();
         this.videoURL = raceSubmission.getVideoURL();
         this.driver = raceSubmission.getDriver().getUsername();
-        this.trackName = raceSubmission.getRace().getTrackName();
+        this.name = raceSubmission.getRace().getName();
     }
 }

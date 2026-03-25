@@ -8,7 +8,7 @@ To start working with the backend install docker and docker compose from https:/
 docker-compose -f docker-compose.yml up -d
 ```
 
-You can use PGAdmin (https://www.pgadmin.org/) or DBeaver (https://dbeaver.io/download/) to access the database on localhost:5432 with database/userOld/password "postgres".
+You can use PGAdmin (https://www.pgadmin.org/) or DBeaver (https://dbeaver.io/download/) to access the database on localhost:5432 with database/user/password "postgres".
 
 In order to run the application you need to have maven installed (https://maven.apache.org/install.html) and run the following commands:
 
@@ -40,6 +40,8 @@ POST /championships/{id}/close          (organizer)
 
 GET /championshipentries/pending
 
+GET /championshipentries/mine
+
 POST /championshipentries/{id}/accept          (organizer)
 
 POST /championshipentries/{id}/reject          (organizer)
@@ -55,6 +57,8 @@ GET /championships/{id}/races
 POST /submissions/race/{id}/submit
 
 GET /submissions
+
+GET /submissions/mine
 
 POST /submissions/{id}/validate          (organizer)
 

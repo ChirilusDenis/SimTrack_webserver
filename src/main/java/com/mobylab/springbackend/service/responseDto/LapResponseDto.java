@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 public class LapResponseDto {
     private UUID id;
-    private LocalTime time;
+    private String time;
     private int points;
     private String driver;
     private String championship;
@@ -20,7 +20,7 @@ public class LapResponseDto {
 
     public  LapResponseDto(Lap lap) {
         this.id = lap.getId();
-        this.time = lap.getTime();
+        this.time = lap.getTime().toString();
         this.points = lap.getPoints();
         this.driver = lap.getDriver().getUsername();
         this.championship = lap.getRace().getChampionship().getName();

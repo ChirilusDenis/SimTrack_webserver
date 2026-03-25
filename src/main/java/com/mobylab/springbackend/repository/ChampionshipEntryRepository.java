@@ -20,4 +20,6 @@ public interface ChampionshipEntryRepository extends JpaRepository<ChampionshipE
     List<ChampionshipEntry> findByChampionshipAndApplicationStatus(Championship championship, ApplicationStatus applicationStatus);
 
     List<ChampionshipEntry> findByApplicationStatus(ApplicationStatus applicationStatus);
+    Boolean existsByChampionshipIdAndUserIdAndApplicationStatus(UUID championshipId, UUID userId, ApplicationStatus applicationStatus);
+    Boolean existsByChampionshipIdAndApplicationStatus(UUID championshipId, ApplicationStatus applicationStatus);
 }

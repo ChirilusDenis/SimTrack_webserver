@@ -10,6 +10,7 @@ import com.mobylab.springbackend.repository.ChampionshipEntryRepository;
 import com.mobylab.springbackend.repository.ChampionshipRepository;
 import com.mobylab.springbackend.repository.UserRepository;
 import com.mobylab.springbackend.service.dto.ChampionshipEntryDto;
+import com.mobylab.springbackend.service.responseDto.ChampionshipEntryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ChampionshipEntryService {
 
     public ChampionshipEntry applyToChampionship(ChampionshipEntryDto championshipEntryDto) {
         if(championshipEntryDto.getChampionship().getStatus() != ChampionshipStatus.ONGOING) {
-            throw new BadRequestException("Invalid championship entry");
+            throw new BadRequestException("Championship is closed");
         }
 
         ChampionshipEntry championshipEntry = new ChampionshipEntry()
@@ -45,7 +46,7 @@ public class ChampionshipEntryService {
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
         if (championship.getStatus() != ChampionshipStatus.ONGOING) {
-            throw new BadRequestException("Invalid championship entry");
+            throw new BadRequestException("Championship is closed");
         }
 
         ChampionshipEntry championshipEntry = new ChampionshipEntry()
@@ -59,7 +60,7 @@ public class ChampionshipEntryService {
         ChampionshipEntry championshipEntry = championshipEntryRepository.findById(entryId)
                 .orElseThrow(() -> new BadRequestException("Entry not found"));
 
-        if (!championshipEntry.getApplicationStatus().equals(ApplicationStatus.PENDING)) {
+        if ( championshipEntry.getApplicationStatus() != ApplicationStatus.PENDING) {
             throw new BadRequestException("This entry is not pending");
         }
 
@@ -71,17 +72,24 @@ public class ChampionshipEntryService {
         ChampionshipEntry championshipEntry = championshipEntryRepository.findById(entryId)
                 .orElseThrow(() -> new BadRequestException("Entry not found"));
 
-        if (!championshipEntry.getApplicationStatus().equals(ApplicationStatus.PENDING)) {
+        if (championshipEntry.getApplicationStatus() != ApplicationStatus.PENDING) {
             throw new BadRequestException("This entry is not pending");
         }
 
-//        championshipEntry.setApplicationStatus(ApplicationStatus.REJECTED);
-//        championshipEntryRepository.save(championshipEntry);
+        championshipEntry.setApplicationStatus(ApplicationStatus.REJECTED);
+        championshipEntryRepository.save(championshipEntry);
 
-        championshipEntryRepository.delete(championshipEntry);
+//        championshipEntryRepository.delete(championshipEntry);
     }
 
     public List<ChampionshipEntry> getPendingEntries() {
         return championshipEntryRepository.findByApplicationStatus(ApplicationStatus.PENDING);
+    }
+
+    public List<ChampionshipEntryResponseDto> getByUserId(UUID userId) {
+        return championshipEntryRepository.findByUserId(userId)
+                .stream()
+                .map(ChampionshipEntryResponseDto::new)
+                .toList();
     }
 }
