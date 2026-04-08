@@ -1,8 +1,8 @@
-# MobyLabWebProgramming
+# SimTrack
 
-This is an example application to teach students the basics of web programming.
+This is the backend for an application to organize and keep track of sim-racing championships. 
 
-To start working with the backend install docker and docker compose from https://docs.docker.com/engine/install/ and enter the command below to launch the Postgresql database while in the Deployment folder:
+To start the backend install docker and docker compose from https://docs.docker.com/engine/install/ and enter the command below to launch the Postgresql database while in the Deployment folder:
 
 ```shell showLineNumbers
 docker-compose -f docker-compose.yml up -d
@@ -17,7 +17,6 @@ mvn clean install
 mvn spring-boot:run
 http://localhost:8090/swagger-ui/index.html
 ```
-//TODO make organizers register secure(not everybody can be organizer)
 
 # End points
 

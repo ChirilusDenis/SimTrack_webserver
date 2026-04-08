@@ -39,6 +39,9 @@ public class AuthService {
             throw new BadRequestException("Email is already used");
         }
 
+        //TODO
+        // make organizer registering need to be approved by another organizer
+
         userRepository.save(new User()
                 .setEmail(registerDto.getEmail())
                 .setPassword(passwordEncoder.encode(registerDto.getPassword()))
