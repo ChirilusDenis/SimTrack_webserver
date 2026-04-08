@@ -32,9 +32,9 @@ public class AuthController {
     @RequestMapping(path ="/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
         logger.info("Request to register user {}", registerDto.getEmail());
-        authService.register(registerDto);
+        String msg = authService.register(registerDto);
         logger.info("Successfully registered user {}", registerDto.getEmail());
-        return new ResponseEntity<>("User registered", HttpStatus.CREATED);
+        return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
 
     @RequestMapping(path ="/login", method = RequestMethod.POST)

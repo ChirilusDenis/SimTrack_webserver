@@ -1,8 +1,11 @@
 package com.mobylab.springbackend.service;
 
 import com.mobylab.springbackend.config.security.JwtGenerator;
+import com.mobylab.springbackend.entity.OrganizerApplication;
 import com.mobylab.springbackend.entity.User;
+import com.mobylab.springbackend.enums.UserRole;
 import com.mobylab.springbackend.exception.BadRequestException;
+import com.mobylab.springbackend.repository.OrganizerApplicationRepository;
 import com.mobylab.springbackend.repository.UserRepository;
 import com.mobylab.springbackend.service.dto.LoginDto;
 import com.mobylab.springbackend.service.dto.RegisterDto;
@@ -28,25 +31,36 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private OrganizerApplicationRepository organizerApplicationRepository;
 
     @Autowired
     private JwtGenerator jwtGenerator;
 
 
-    public void register(RegisterDto registerDto) {
+    public String register(RegisterDto registerDto) {
 
-        if(userRepository.existsUserByEmail(registerDto.getEmail())) {
+        if (userRepository.existsUserByEmail(registerDto.getEmail())) {
             throw new BadRequestException("Email is already used");
         }
 
-        //TODO
-        // make organizer registering need to be approved by another organizer
+        if (registerDto.getRole() == UserRole.ORGANIZER) {
+            //create organizer creation request
+            organizerApplicationRepository.save(new OrganizerApplication()
+                    // password is kept hashed
+                    .setPassword(passwordEncoder.encode(registerDto.getPassword()))
+                    .setEmail(registerDto.getEmail())
+                    .setUsername(registerDto.getUsername()));
 
-        userRepository.save(new User()
-                .setEmail(registerDto.getEmail())
-                .setPassword(passwordEncoder.encode(registerDto.getPassword()))
-                .setUsername(registerDto.getUsername())
-                .setRole(registerDto.getRole()));
+            return "Organizer applications has been registered successfully";
+        } else {
+            userRepository.save(new User()
+                    .setEmail(registerDto.getEmail())
+                    .setPassword(passwordEncoder.encode(registerDto.getPassword()))
+                    .setUsername(registerDto.getUsername())
+                    .setRole(registerDto.getRole()));
+            return "User registered successfully";
+        }
     }
 
     public String login(LoginDto loginDto) {

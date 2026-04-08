@@ -7,7 +7,6 @@ import com.mobylab.springbackend.service.*;
 import com.mobylab.springbackend.service.dto.ChampionshipDto;
 import com.mobylab.springbackend.service.dto.RaceDto;
 import com.mobylab.springbackend.service.responseDto.*;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController

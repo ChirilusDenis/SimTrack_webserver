@@ -65,3 +65,11 @@ GET /submissions/mine
 POST /submissions/{id}/validate          (organizer)
 
 POST /submissions/{id}/reject          (organizer)
+
+## Organizer Applications
+
+GET /organizer_applications             (organizer)
+
+POST/organizer_applications/{id}/accept             (organizer)
+
+POST/organizer_applications/{id}/reject             (organizer)
