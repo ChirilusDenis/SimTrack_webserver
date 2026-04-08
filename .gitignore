@@ -5,6 +5,8 @@ target/
 !**/src/test/**/target/
 myStuff.txt
 eradicate.sh
+*.env
+local.properties
 
 ### STS ###
 .apt_generated

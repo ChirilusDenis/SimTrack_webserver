@@ -24,7 +24,7 @@ public class Race extends BaseEntity {
     private String trackName;
 
     @ManyToOne
-    @JoinColumn(name = "championship_id")
+    @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;
 
     @OneToMany(mappedBy = "race")

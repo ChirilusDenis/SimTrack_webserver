@@ -18,11 +18,11 @@ import lombok.experimental.Accessors;
 public class ChampionshipEntry extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "championship_id")
+    @JoinColumn(name = "championship_id", nullable = false)
     private Championship championship;
 
     @Enumerated(EnumType.STRING)

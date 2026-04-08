@@ -35,7 +35,8 @@ public class ChampionshipController implements  SecuredRestController {
     private UserService userService;
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<ChampionshipResponseDto> createChampionship(@RequestBody ChampionshipDto championshipDto,
                                                                       Principal principal) {
         String email = principal.getName();
@@ -55,7 +56,8 @@ public class ChampionshipController implements  SecuredRestController {
     }
 
     @PostMapping("/{id}/apply")
-//    @PreAuthorize("hasAuthority('USER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<ChampionshipEntryResponseDto> applyChampionship(@PathVariable("id") UUID championshipId,
                                                                Principal principal) {
         String email = principal.getName();
@@ -71,21 +73,24 @@ public class ChampionshipController implements  SecuredRestController {
     }
 
     @PostMapping("/{id}/close")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<Void> closeChampionship(@PathVariable("id") UUID championshipId) {
         championshipService.closeChampionship(championshipId);
         return ResponseEntity.status(200).build();
     }
 
     @PostMapping("/{id}/end")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<List<WinnerResponseDto>> endChampionship(@PathVariable("id") UUID championshipId) {
         List<WinnerResponseDto> winners = championshipService.endChampionship(championshipId);
         return ResponseEntity.status(200).body(winners);
     }
 
     @PostMapping("/{id}/race")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<RaceResponseDto> createRace(@PathVariable("id") UUID championshipId,
                                                       @RequestBody RaceDto raceDto) {
         Race race = raceService.createRace(raceDto, championshipId);

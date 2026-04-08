@@ -38,7 +38,7 @@ public class ApplicationInitializer implements CommandLineRunner {
                     .setUsername(adminUsername)
                     .setEmail(adminEmail)
                     .setPassword(passwordEncoder.encode(adminPassword))
-                    .setRole(UserRole.ROLE_ORGANIZER);
+                    .setRole(UserRole.ORGANIZER);
             userRepository.save(initAdmin);
         }
 

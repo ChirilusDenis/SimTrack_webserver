@@ -23,7 +23,8 @@ public class ChampionshipEntriesController implements SecuredRestController{
     private UserService userService;
 
     @GetMapping("/pending")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<List<ChampionshipEntryResponseDto>> getPendingEntries() {
         List<ChampionshipEntryResponseDto> pendingEntries = championshipEntryService
                 .getPendingEntries()
@@ -34,20 +35,23 @@ public class ChampionshipEntriesController implements SecuredRestController{
     }
 
     @PostMapping("/{id}/accept")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<Void> acceptEntry(@PathVariable("id") UUID id) {
         championshipEntryService.approveEntry(id);
         return ResponseEntity.status(200).build();
     }
     @PostMapping("/{id}/reject")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<Void> rejectEntry(@PathVariable("id") UUID id) {
         championshipEntryService.rejectEntry(id);
         return ResponseEntity.status(200).build();
     }
 
     @GetMapping("/mine")
-//    @PreAuthorize("hasAuthority('USER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<ChampionshipEntryResponseDto>> getMyEntries(Principal principal) {
         String email = principal.getName();
         List<ChampionshipEntryResponseDto> entries = championshipEntryService

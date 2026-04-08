@@ -25,14 +25,14 @@ public class Lap extends BaseEntity {
     private int points;
 
     @ManyToOne
-    @JoinColumn(name = "race_id")
+    @JoinColumn(name = "race_id", nullable = false)
     private Race race;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id")
+    @JoinColumn(name = "driver_id", nullable = false)
     private User driver;
 
     @ManyToOne
-    @JoinColumn(name = "verified_by_id")
+    @JoinColumn(name = "verified_by_id", nullable = false)
     private User verifiedBy;
 }

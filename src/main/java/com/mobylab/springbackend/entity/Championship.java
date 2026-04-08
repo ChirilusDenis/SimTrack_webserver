@@ -27,7 +27,7 @@ public class Championship extends BaseEntity {
     private ChampionshipStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "created_by_id")
+    @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
     @OneToMany(mappedBy = "championship")

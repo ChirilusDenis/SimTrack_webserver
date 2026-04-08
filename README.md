@@ -17,6 +17,7 @@ mvn clean install
 mvn spring-boot:run
 http://localhost:8090/swagger-ui/index.html
 ```
+//TODO make organizers register secure(not everybody can be organizer)
 
 # End points
 
@@ -35,6 +36,8 @@ POST /championships/{id}/apply
 GET /championships/{id}/participants
 
 POST /championships/{id}/close          (organizer)
+
+POST /championships/{id}/end          (organizer)
 
 ## ChampionshipEntries
 

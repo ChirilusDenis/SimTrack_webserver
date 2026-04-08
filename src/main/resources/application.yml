@@ -12,8 +12,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show-sql: true
         ddl-auto: update # create-drop
-#        jdbc:
-#          time_zone: UTC # Europe/Bucharest
     open-in-view: false
   flyway:
     enabled: true
@@ -24,11 +22,22 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: @mail.username@
+    password: @mail.password@
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 vars:
-#  TODO
   security:
-    enable: false
+    enable: true
 
 server:
   port: 8090

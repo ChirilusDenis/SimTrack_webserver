@@ -19,10 +19,6 @@ public abstract class BaseEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public void updateTime() {
-        this.updatedAt = LocalDateTime.now();
-    }
-
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

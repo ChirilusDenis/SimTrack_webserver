@@ -31,10 +31,10 @@ public class RaceSubmission extends BaseEntity {
     private SubmissionStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User driver;
 
     @ManyToOne
-    @JoinColumn(name = "race_id")
+    @JoinColumn(name = "race_id", nullable = false)
     private Race race;
 }

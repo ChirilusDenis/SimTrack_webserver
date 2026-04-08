@@ -25,11 +25,21 @@ public class RaceSubmissionsController implements SecuredRestController {
 
     @Autowired
     private UserService  userService;
-    @Autowired
-    private RaceSubmissionRepository raceSubmissionRepository;
+
+    @GetMapping
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
+    public ResponseEntity<List<RaceSubmissionResponseDto>> getAllSubmissions() {
+        List<RaceSubmissionResponseDto> submissions = raceSubmissionService.getPending()
+                .stream()
+                .map(RaceSubmissionResponseDto::new)
+                .toList();
+        return ResponseEntity.status(200).body(submissions);
+    }
 
     @PostMapping("/race/{id}/submit")
-//    @PreAuthorize("hasAuthority('USER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<RaceSubmissionResponseDto> submit(@PathVariable("id") UUID raceId,
                                                             Principal principal,
                                                             @RequestBody RaceSubmissionDto raceSubmissionDto) {
@@ -40,18 +50,9 @@ public class RaceSubmissionsController implements SecuredRestController {
 
     }
 
-    @GetMapping
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
-    public ResponseEntity<List<RaceSubmissionResponseDto>> getAllSubmissions() {
-        List<RaceSubmissionResponseDto> submissions = raceSubmissionService.getPending()
-                .stream()
-                .map(RaceSubmissionResponseDto::new)
-                .toList();
-        return ResponseEntity.status(200).body(submissions);
-    }
-
     @PostMapping("/{id}/validate")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<LapResponseDto> validateRaceSubmission(@PathVariable("id") UUID submissionId,
                                                                  Principal principal) {
         String email = principal.getName();
@@ -61,14 +62,16 @@ public class RaceSubmissionsController implements SecuredRestController {
     }
 
     @PostMapping("/{id}/reject")
-//    @PreAuthorize("hasAuthority('ORGANIZER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('ORGANIZER')")
     public ResponseEntity<Void> rejectRaceSubmission(@PathVariable("id") UUID submissionId) {
         raceSubmissionService.reject(submissionId);
         return ResponseEntity.status(200).build();
     }
 
     @GetMapping("/mine")
-//    @PreAuthorize("hasAuthority('USER')")
+//    @SecurityRequirement(name = "bearerAuth")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<RaceSubmissionResponseDto>> getMySubmissions(Principal principal) {
         String email = principal.getName();
         List<RaceSubmissionResponseDto> subs = raceSubmissionService.getByUserId(

@@ -27,7 +27,7 @@ public class ChampionshipService {
     private final RaceRepository raceRepository;
     private final LapRepository lapRepository;
     private final RaceSubmissionRepository raceSubmissionRepository;
-//    private final EmailService emailService;
+    private final EmailService emailService;
 
     public Championship addChampionship(ChampionshipDto championshipDto, UUID creatorID) {
         User createdBy = userRepository.findById(creatorID)
@@ -158,20 +158,18 @@ public class ChampionshipService {
                 getPointsInChampionship(championshipId, u2.getId())
                         - getPointsInChampionship(championshipId, u1.getId()));
 
-//        List<UserResponseDto> winners = new ArrayList<>();
         List<WinnerResponseDto> winners = new ArrayList<>();
         for (int i = 0; i < 3 && i < participants.size(); i++) {
 
-//            String place = switch (i){
-//                case 0 -> "first";
-//                case 1 -> "second";
-//                default -> "third";
-//            };
-//            emailService.sendSimpleMessage(participants.get(i).getEmail(),
-//                    "Championship standings",
-//                    "You managed " + place + " place.\n");
+            String place = switch (i){
+                case 0 -> "first";
+                case 1 -> "second";
+                default -> "third";
+            };
+            emailService.sendSimpleMessage(participants.get(i).getEmail(),
+                    "Championship standings",
+                    "You scored " + place + " place.\n");
 
-//            winners.add(new  UserResponseDto(participants.get(i)));
             winners.add(new WinnerResponseDto(participants.get(i),
                     i + 1,
                     getPointsInChampionship(championshipId, participants.get(i).getId())));
