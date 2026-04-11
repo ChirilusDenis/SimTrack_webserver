@@ -167,8 +167,8 @@ public class ChampionshipService {
                 default -> "third";
             };
             emailService.sendSimpleMessage(participants.get(i).getEmail(),
-                    "Championship standings",
-                    "You scored " + place + " place.\n");
+                    "Standings in " + championship.getName() + " championship",
+                    "You got " + place + " place.\n");
 
             winners.add(new WinnerResponseDto(participants.get(i),
                     i + 1,

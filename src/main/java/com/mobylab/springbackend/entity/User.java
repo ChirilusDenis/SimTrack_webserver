@@ -38,4 +38,7 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "driver")
     private List<RaceSubmission>  raceSubmissions;
+
+    @OneToMany(mappedBy = "approvedBy")
+    private List<OrganizerApplication> approvedApplications;
 }

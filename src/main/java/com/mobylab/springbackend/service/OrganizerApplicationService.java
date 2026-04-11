@@ -22,8 +22,8 @@ public class OrganizerApplicationService {
     private final OrganizerApplicationRepository organizerApplicationRepository;
     private final UserRepository userRepository;
 
-    public List<OrganizerApplicationDto> getAll() {
-        return organizerApplicationRepository.findAll()
+    public List<OrganizerApplicationDto> getAllPending() {
+        return organizerApplicationRepository.findAllByApprovedByIsNull()
                 .stream()
                 .map(OrganizerApplicationDto::new)
                 .toList();
@@ -32,13 +32,20 @@ public class OrganizerApplicationService {
     public void deny(UUID id) {
         organizerApplicationRepository.findById(id)
                 .ifPresentOrElse(
-                        (app) -> organizerApplicationRepository.delete(app),
-                        () -> new BadRequestException("Application not found"));
+                        organizerApplicationRepository::delete,
+                        () -> {throw new BadRequestException("Application not found");}
+                );
     }
 
-    public void accept(UUID id) {
+    public void accept(UUID id, UUID organizerId) {
         OrganizerApplication application =  organizerApplicationRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Application not found"));
+
+        if (userRepository.findByEmail(application.getEmail()).isPresent()) {
+            // remove application with email already used
+            organizerApplicationRepository.delete(application);
+            throw new  BadRequestException("User already exists");
+        }
 
         userRepository.save(new User()
                 .setEmail(application.getEmail())
@@ -46,7 +53,9 @@ public class OrganizerApplicationService {
                 .setUsername(application.getUsername())
                 .setRole(UserRole.ORGANIZER));
 
-        organizerApplicationRepository.delete(application);
+        application.setApprovedBy(userRepository.findById(organizerId)
+                .orElseThrow(() -> new BadRequestException("Approver not found.")));
+        organizerApplicationRepository.save(application);
 
     }
 }

@@ -7,6 +7,8 @@ CREATE TABLE organizer_applications (
     username TEXT,
     password TEXT,
     email TEXT,
+    approved_by_id UUID,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (approved_by_id) references project.users(id)
 );

@@ -1,6 +1,8 @@
 package com.mobylab.springbackend.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,4 +21,8 @@ public class OrganizerApplication extends BaseEntity {
     private String username;
     private String password;
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "approved_by_id")
+    private User approvedBy = null;
 }
